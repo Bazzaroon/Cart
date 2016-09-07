@@ -18,9 +18,10 @@ $.widget('colorart.login', {
             mkUp += "<div style='margin:20px auto;width:80%'><input type='text' class='username' /></div>";
             $(self.element).append(mkUp);
             
-            $('.username').bind('click', function(){
+            $('.username').bind('keydown', function(){
                 if($(this).val().length == 0){
                     $(this).css({'background-image' : 'none'});
+                    $('.loginerror').text('');
                 }
             })
             
@@ -33,6 +34,7 @@ $.widget('colorart.login', {
             $('.pwhash').bind('click', function(){
                 if($(this).val().length == 0){
                     $(this).css({'background-image' : 'none'});
+                    
                 }
             })
             
@@ -40,13 +42,22 @@ $.widget('colorart.login', {
 
         },
         DoLogin:function(){
+            $.cookie('location', location.host, { expires: 1});
             var creds = {uname:$('.username').val(), pword: Sha1.hash($('.pwhash').val())};
-            var Url = location.host + '/Cart/request.php?cmd=login';
             $.ajax({
-                url:Url,
+                url:'/Cart/caphp.php?cmd=login',
                 async:false,
                 type:'post',
                 data:creds,
+                success: function(data){
+                  if(data != 'login 0'){
+                      var cookiedata = data.replace('login ','');
+                      $.cookie('userdata', cookiedata, {expires: 1});
+                      location.href = '/Cart/cleverarthome.php';
+                  } else {
+                      $('.loginerror').text('Unable to log in. Unrecognised Emailaddress or Password');
+                  }  
+                },
                 error: function(a,b,c){
                     $('.loginerror').text('Unable to log in. Sorry');
                 }
@@ -54,3 +65,10 @@ $.widget('colorart.login', {
         }
         
 });
+
+function GetToken(){
+    alert($cookie('userdata'));
+    //var cookieData = JSON.parse($.cookie('userdata'));
+    //if(cookieData === undefined) alert('No Cookie');
+    //var a = 13;
+}
