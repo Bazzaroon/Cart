@@ -12,6 +12,7 @@
 	position:absolute;
 	left:20px;
 	top:10px;
+        cursor:pointer;
 }
 </style>
     <link href="css/cleverart.css" rel="stylesheet" type="text/css"/>
@@ -38,7 +39,10 @@
 
 <script>
 	function Login(){
-            $('#logindlg').login({width:500, height: 350});
+            $('#logindlg').login({width:500, height: 290});
             $('.login a').hide();
         }
+        $('.banner').bind('click', function(){
+            location.href = location.href;
+        })
 </script>

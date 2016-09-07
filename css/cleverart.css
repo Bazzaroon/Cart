@@ -70,5 +70,17 @@ body{
     height:36px;
     border:1px solid #CCCCCC;
     margin:0 auto;
-    
+    font-size:12pt;
+    background-color: #0c1828;
+    color:white;
+    cursor:pointer;
+}
+.loginbtn:hover{
+    background-color:#3263a5;
+}
+.loginerror{
+    color:Red;
+    font-family:Arial;
+    font-size:12pt;
+    padding-left:10px;
 }
