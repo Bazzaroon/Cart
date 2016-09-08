@@ -42,6 +42,7 @@
         $(document).ready(function(){
             GetToken();
         });
+        
         function Login(){
             $('#logindlg').login({width:500, height: 290});
             $('.login a').hide();

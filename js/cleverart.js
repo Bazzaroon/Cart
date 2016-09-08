@@ -25,19 +25,26 @@ $.widget('colorart.login', {
                 }
             })
             
-            mkUp = "<div style='margin:20px auto;width:80%'><input type='password' class='pwhash' /></div>";
+            mkUp = "<div style='margin:20px auto;width:80%'><input type='password' autocomplete='false' class='pwhash' /></div>";
             mkUp += "<div style='margin:20px auto;width:80%'><a href='#' class='forgottenpassword'>Forgotten Password</a></div>";
             mkUp += "<div style='margin:0 auto;width:100px'><button type='button' onclick='self.DoLogin()' class='loginbtn'>Submit</button></div>";
             mkUp += "<div class='loginerror'></div>";
             
             $(self.element).append(mkUp);
-            $('.pwhash').bind('click', function(){
+            
+            $('.pwhash').bind('keydown', function(){
                 if($(this).val().length == 0){
                     $(this).css({'background-image' : 'none'});
                     
                 }
             })
             
+            var x = event;
+            $('.username').keydown(function(event){
+                if(event.keyCode == 13){
+                    self.DoLogin();
+                }
+            }).focus();
 
 
         },
@@ -52,7 +59,7 @@ $.widget('colorart.login', {
                 success: function(data){
                   if(data != 'login 0'){
                       var cookiedata = data.replace('login ','');
-                      $.cookie('userdata', cookiedata, {expires: 1});
+                      $.cookie('userdata', cookiedata, {expires: 1, path: '/'});
                       location.href = '/Cart/cleverarthome.php';
                   } else {
                       $('.loginerror').text('Unable to log in. Unrecognised Emailaddress or Password');
@@ -71,5 +78,23 @@ function GetToken(){
     if(cookieData != undefined){ 
         location.href = '/Cart/cleverarthome.php';
     }
-    //var a = 13;
 }
+
+$.widget('cleverart.dashlist', {
+   self:null,
+   options:{
+       width:200,
+       height:400,
+       top:100,
+       left:50,
+       title:'Artwork'
+   },
+   _create: function(){
+       self = this;
+       $(self.element).css({width:self.options.width + 'px'})
+       _markUp();
+   },
+   _markUp: function(){
+       var mkUp = "<div ";
+   }
+});
