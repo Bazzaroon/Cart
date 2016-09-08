@@ -67,8 +67,9 @@ $.widget('colorart.login', {
 });
 
 function GetToken(){
-    alert($cookie('userdata'));
-    //var cookieData = JSON.parse($.cookie('userdata'));
-    //if(cookieData === undefined) alert('No Cookie');
+    var cookieData = $.cookie('userdata');
+    if(cookieData != undefined){ 
+        location.href = '/Cart/cleverarthome.php';
+    }
     //var a = 13;
 }
