@@ -80,6 +80,19 @@ function GetToken(){
     }
 }
 
+var dash = function(width,height,top,left,title){
+    this.Width = width;
+    this.Height = height;
+    this.Top = top;
+    this.Left = left;
+    this.Title = title;
+    
+    this.Display = function(){
+    var mkUp = "<div class='dash-container'></div>";
+    $('body').append(mkUp);
+    $('.dash-container').css({width:this.Width+'px',height:this.Height+'px'});
+  }
+}
 $.widget('cleverart.dashlist', {
    self:null,
    options:{

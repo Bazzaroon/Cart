@@ -35,6 +35,8 @@
     $(document).ready(function(){
         var cookieData = JSON.parse($.cookie('userdata'));
         $('.loggedin').html("<a style='text-decoration:none' href='javascript:LogOut()'>Log Out&nbsp;</a>Logged In:" + cookieData['UserName']);
+        var dsh = new Dash();
+        dsh.Display();
     });
     
     function LogOut(){
