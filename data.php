@@ -18,10 +18,10 @@
             {
                 $dbhost = 'db636060245.db.1and1.com';
             } else {
-                $dbhost = '192.168.0.27';
+                $dbhost = '127.0.0.1';
             }
             
-            $mysqli = new mysqli('127.0.0.1', $this->dbuser, $this->dbpass, 'db636060245');
+            $mysqli = new mysqli($dbhost, $this->dbuser, $this->dbpass, 'db636060245');
 //            $this->conn = mysql_connect($dbhost, $this->dbuser, $this->dbpass);
 //            if(!$this->conn)
 //            {

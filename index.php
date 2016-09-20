@@ -17,7 +17,7 @@
     <link href="css/cleverart.css" rel="stylesheet" type="text/css"/>
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     
-    <script src="js/jquery-1.8.0.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/jquery.cookie.js" type="text/javascript"></script>
     <script src="js/sha1.js" type="text/javascript"></script>
     <script src="js/jquery-ui.js" type="text/javascript"></script>

@@ -41,7 +41,7 @@ $.widget('colorart.login', {
             
             var x = event;
             $('.username').keydown(function(event){
-                if(event.keyCode == 13){
+                if(event.keyCode === 13){
                     self.DoLogin();
                 }
             }).focus();
@@ -80,34 +80,107 @@ function GetToken(){
     }
 }
 
-var dash = function(width,height,top,left,title){
+var dash = function(width,height,top,left,title,id,menuitems){
     this.Width = width;
     this.Height = height;
     this.Top = top;
     this.Left = left;
     this.Title = title;
+    this.Data = null;
+    this.contextMenu = null;
+    this.Id = id;
+    this.MenuItems = menuitems;
     
     this.Display = function(){
-    var mkUp = "<div class='dash-container'></div>";
-    $('body').append(mkUp);
-    $('.dash-container').css({width:this.Width+'px',height:this.Height+'px'});
-  }
+        var mkUp = "<div class='dash-container'><div class='dash-title' title='Click for options'></div><div class='dash-scroller'><div class='dash-list'></div></div></div>";
+        $('body').append(mkUp);
+        $('.dash-container').css({width:this.Width+'px',height:this.Height+'px',left:this.Left+'px', top:this.Top+'px'});
+        $('.dash-title').text(this.Title);
+        $('.dash-title').append("<div class='dash-gear'></div>");
+        
+        var tData = {Id:this.Id,Items:this.MenuItems};
+        $('.dash-gear').mouseenter(tData, function(e){
+            if($('#'+e.data['Id']).length == 0){
+                this.contextMenu = new caContextMenu($('.dash-gear'),e.data['Items'],e.data['Id']);
+                this.contextMenu.Draw();
+            }
+        });
+        $('#' + this.Id).click(function(e){
+           $(this).remove(); 
+        });
+    }
+    this.GetData = function(cmd, sql){
+        this.Data = caData.GetData(cmd,sql);
+    }
+    
+        this.DisplayList = function(){
+        for(var x=0;x<this.Data.length;x++){
+            var mkUp = "<div class='dash-list-item'><div></div>"+this.Data[x]['ProjectName']+"</div>";
+            $('.dash-scroller').append(mkUp);
+        }
+        $('.dash-scroller').css({height:(this.Height - 40) + 'px'});
+        
+    }
+ }
+
+var caData = {
+    GetData: function(aUrl, aSql){
+        var retVal = null;
+        $.ajax({
+            url:aUrl,
+            async:false,
+            type:'POST',
+            data:{adata: aSql},
+            success: function(data){
+                retVal = JSON.parse(data);
+            },
+            error: function(){
+                alert('Unable to fetch data.')
+            }
+        });
+        return retVal;
+    }
 }
-$.widget('cleverart.dashlist', {
-   self:null,
-   options:{
-       width:200,
-       height:400,
-       top:100,
-       left:50,
-       title:'Artwork'
-   },
-   _create: function(){
-       self = this;
-       $(self.element).css({width:self.options.width + 'px'})
-       _markUp();
-   },
-   _markUp: function(){
-       var mkUp = "<div ";
-   }
-});
+
+
+var caContextMenu = function(element, options, id){
+    this.Element = element;
+    this.Options = options;
+    this.Id = id;
+    
+        this.Draw = function(){
+            var mkUp = "<div id='" + this.Id + "' class='context-container'></div>";
+            $('body').append(mkUp);
+            var eTop = parseInt($(this.Element).css('top')) + $(this.Element).parent().parent().position().top;
+            var eLeft = parseInt($(this.Element).css('left')) + $(this.Element).parent().parent().position().left;
+            $('#'+this.Id).css({top:eTop+'px',left:eLeft+'px'});
+            
+            for(var x=0;x<this.Options.length;x++){
+                mkUp = "<div class='contextmenuoption'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+this.Options[x]+"</div>";
+                $('#' + this.Id).append(mkUp);
+            }
+        $('#' + this.Id).mouseleave(function(){
+           $(this).remove(); 
+        });
+        }
+    }
+
+var project = {
+  Load:function(aUrl, aSql){
+        var retVal = null;
+        $.ajax({
+            url:aUrl,
+            async:false,
+            type:'POST',
+            data:{adata: aSql},
+            success: function(data){
+                retVal = JSON.parse(data);
+            },
+            error: function(){
+                alert('Unable to fetch data.')
+            }
+        });
+        return retVal;
+    }
+    
+};
