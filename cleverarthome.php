@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="css/cleverart.css" rel="stylesheet" type="text/css"/>
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <link href="css/jqtree.css" rel="stylesheet" type="text/css"/>
     
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/jquery.cookie.js" type="text/javascript"></script>
@@ -11,7 +12,7 @@
     <script src="js/jquery-ui.js" type="text/javascript"></script>
     
     <script src="js/cleverart.js" type="text/javascript"></script>
-    
+    <script src="js/tree.jquery.js" type="text/javascript"></script>
     <style type="text/css">
     .banner{
 	background-image:url('ArtImages/Banner.png');
@@ -28,7 +29,8 @@
         <div class='loggedin'></div>
         <table border='1' class='home-table' cellspacing='0'>
             <tr style='height:69px'><td colspan='2'><div class="banner" style="background-image:url('ArtImages/BannerHome.png')"></div></td></tr>
-            <tr><td style='width:22%'><div class='dash-container'><div>Projects</div></div></td><td>
+            <tr><td style='width:22%'><div class='dash-container'><div class="dash-title">Projects
+                        </div><div class="dash-list"></div></div></td><td>
                     <div id="dpanel" class="dash-panel">
                         <ul>
                         </ul>
@@ -48,14 +50,14 @@
             classes: {'ui-tabs': 'highlight'},
             heightStyle:'fill',
         });
-        project('/Cart/project.php?cmd=get', 'select * from ca_projects where ')
+        
+        $('.dash-list').tree({
+            data:[{name:'Bazza',id:1}],
+            autoOpen:true,
+            dragAndDrop:true
+        });
     });
     
-    
-    
-    function GetUserOptions(){
-        
-    }
     
     function LogOut(){
         if(confirm('Are you sure?')){
@@ -69,4 +71,5 @@
         $('#dpanel ul').append(mkUp);
         $('#dpanel').tabs('refresh');
     }
+    
 </script>

@@ -123,7 +123,7 @@ body{
     border-radius: 8px 8px 0 0;
     
 }
-.dash-container div{
+.dash-title{
     width:100%;
     height:40px;
     background-color:#0c1828;
@@ -134,12 +134,12 @@ body{
     border-radius: 10px 10px 0 0;
     line-height:40px;
 }
-
-.dash-title div{
-    cursor:pointer;
-    width:21px;
-    height:18px;
+.dash-list{
+    width:100%;
+    height:100%;
 }
+
+
 .dash-panel{
     width:100%;
     height:100%;
@@ -152,7 +152,7 @@ body{
     margin-left: 3px;
     overflow:hidden;
     white-space:nowrap;
-    width:100%;
+    width:inherit;
     padding-right: -3px;
     cursor:pointer;
 

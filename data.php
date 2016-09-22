@@ -1,12 +1,11 @@
  <?php
     
-    
     class dataClass
     {
-         
-         private $dbuser = 'dbo636060245';
-         private $dbpass = 'repro20';
-         private $dbase = 'db636060245';
+          
+        private $dbuser = 'dbo636060245';
+        private $dbpass = 'repro20';
+        private $dbase = 'db636060245';
 
         private $conn;
         
@@ -22,13 +21,6 @@
             }
             
             $mysqli = new mysqli($dbhost, $this->dbuser, $this->dbpass, 'db636060245');
-//            $this->conn = mysql_connect($dbhost, $this->dbuser, $this->dbpass);
-//            if(!$this->conn)
-//            {
-//                echo "<script>window.location = 'errorpage.html';</script>";
-//                
-//                return null;
-//            }
             
             return $mysqli;
         }

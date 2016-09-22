@@ -165,6 +165,46 @@ var caContextMenu = function(element, options, id){
         }
     }
 
+$.widget('cleverart.dlist',{
+    self:null,
+    options:{
+        url:null,
+        sql:null,
+        dbData:null,
+        listitemwidth:35
+    },
+    _create: function(){
+        self = this;
+        if(self.options.url != null && self.options.sql != null){
+            self._loadData();
+            self._showData();
+        }
+    },
+    _loadData: function(){
+        $.ajax({
+            url:self.options.url,
+            async:false,
+            type:'POST',
+            data:{postdata: self.options.sql},
+            success: function(data){
+                self.options.dbData = JSON.parse(data);
+            },
+            error: function(){
+                alert('Unable to fetch data.')
+            }
+        });
+    },
+    _showData: function(){
+        var mkUp = '';
+        for(var x=0;x<self.options.dbData.length;x++){
+            var dta = self.options.dbData[x]['ProjectName'].substring(0,self.options.listitemwidth);
+            var projname = dta.length >= self.options.listitemwidth ? dta + ' ...' : dta;
+            mkUp += "<div title='" + self.options.dbData[x]['ProjectName'] + "' class='dash-list-item'>" + projname + "</div>";
+        }
+        $(self.element).html(mkUp);
+    }
+    
+});
 var project = {
   Load:function(aUrl, aSql){
         var retVal = null;
@@ -181,6 +221,8 @@ var project = {
             }
         });
         return retVal;
+    },
+    PHPLoad:function(){
     }
     
 };
